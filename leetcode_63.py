@@ -2,20 +2,22 @@ class Solution(object):
     def uniquePathWithObstacles(self, obstacleGrid):
         m = len(obstacleGrid)
         n = len(obstacleGrid[0])
-        return DFS(0, 0, m-1, n-1, obstacleGrid)
+        grid = [[1 for i in range(n)] for i in range(m)]
+        for i in range(m):
+            for j in range(n):
+                if(obstacleGrid[i][j] == 1):
+                    grid[i][j] = -99999
+                elif(i > 0 and j > 0):
+                    grid[i][j] = max(0, max(0, grid[i - 1][j]) + max(0, grid[i][j - 1]))
+                elif(i == 0 and j > 0):
+                    grid[i][j] = max(0, grid[i][j - 1])
+                elif(j == 0 and i > 0):
+                    grid[i][j] = max(0, grid[i - 1][j])
+        return max(0, grid[m - 1][n - 1])
 
-def DFS(x, y, m, n, obstacleGrid):
-    if(obstacleGrid[x][y] == 1):
-        return 0
-    elif(x == m and y == n):
-        return 1
-    elif(x == m):
-        return DFS(x, y + 1, m, n, obstacleGrid)
-    elif(y == n):
-        return DFS(x + 1, y, m, n, obstacleGrid)
-    else:
-        return DFS(x, y + 1, m, n, obstacleGrid) + DFS(x + 1, y, m, n, obstacleGrid)
+        
+
     
 #使用递归扫描所有路径，但是最后时间超了
 
-print(Solution().uniquePathWithObstacles([[1]]))
+print(Solution().uniquePathWithObstacles([[0, 0, 0]]))
