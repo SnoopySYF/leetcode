@@ -10,7 +10,7 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
-        if(head == [] or head.next == None):
+        if(head == None or head.next == None):
             return head
         last = head.val
         lnode = head
